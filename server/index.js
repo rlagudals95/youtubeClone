@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
 
+//클라이언트에서 요청을 보내면 일단 이쪽으로 온다!
+
 // const mongoose = require("mongoose");
 // mongoose
 //   .connect(config.mongoURI, { useNewUrlParser: true })
@@ -34,7 +36,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
-
+app.use("/api/video", require("./routes/video"));
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
