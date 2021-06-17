@@ -72,6 +72,17 @@ router.get("/getVideos", (req, res) => {
     });
 });
 
+// 비디오 디테일 정보가져오기
+router.post("/getVideoDetail", (req, res) => {
+  Video.findOne({ _id: req.body.videoId }) // 클라이언트 에서 보낸 비디오 id로 찾는다
+    // 비디오의 모든 정보를 가져오기 위해서 populate를 써준다
+    .populate("writer")
+    .exec((err, videoDetail) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ success: true, videoDetail });
+    });
+});
+
 //썸네일 생성
 
 router.post("/thumbnail", (req, res) => {
