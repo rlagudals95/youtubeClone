@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { Video } = require("../models/Video");
-
 const { auth } = require("../middleware/auth");
 const multer = require("multer");
+
 //썸네일 가져오기 위해!
 let ffmpeg = require("fluent-ffmpeg");
+const { json } = require("body-parser");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -59,6 +60,16 @@ router.post("/uploadVideo", (req, res) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({ success: true });
   });
+});
+
+// 비디오들을 DB에서 가져와서 클라이언트로 보내주기
+router.get("/getVideos", (req, res) => {
+  Video.find()
+    .populate("writer") // populate를 해줘야 비디오의 모든 정보를 가져올 수 있음
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
 });
 
 //썸네일 생성

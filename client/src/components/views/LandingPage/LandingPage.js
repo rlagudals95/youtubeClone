@@ -1,16 +1,71 @@
-import React from 'react'
+import React from "react";
+import { useEffect, useState } from "react";
 import { FaCode } from "react-icons/fa";
+import { Typography, Row, Col, Avatar, Card, Icon } from "antd";
+import moment from "moment";
+import axios from "axios";
+const { Title } = Typography;
+const { Meta } = Card;
 
 function LandingPage() {
+  const [Videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    axios.get("/api/video/getVideos").then((res) => {
+      if (res.data.success) {
+        console.log(res.data);
+        setVideos(res.data.videos);
+      } else {
+        alert("비디오 불러오기 실패😅");
+      }
+    });
+  }, []);
+
+  const renderCards = Videos.map((video, index) => {
+    let minutes = Math.floor(video.duration / 60); // 60으로 나누면 분이된다
+    let seconds = Math.floor(video.duration - minutes * 60); // 분을 지우고 60곱하면 초가 된다
+
     return (
-        <>
-            <div className="app">
-                <FaCode style={{ fontSize: '4rem' }} /><br />
-                <span style={{ fontSize: '2rem' }}>Let's Start Coding!</span>
+      <Col lg={6} md={8} xs={24}>
+        <a href={`/video/post/${video._id}`}>
+          <div style={{ position: "relative" }}>
+            <img
+              style={{ width: "100%" }}
+              src={`http://localhost:5000/${video.thumbnail}`}
+              alt="thumbnail"
+            />
+            <div className="duration">
+              <span>
+                {minutes}: {seconds}
+              </span>
             </div>
-            <div style={{ float: 'right' }}>Thanks For Using This Boiler Plate by John Ahn</div>
-        </>
-    )
+          </div>
+        </a>
+        <br />
+        <Meta
+          avatar={<Avatar src={video.writer.image} />}
+          title={video.title}
+          description=""
+        />
+        <span></span>
+        <br />
+        <span style={{ marginLeft: "3rem" }}>{video.views} views</span>-
+        <span>{moment(video.createdAt).format("MMM Do YY")}</span>
+      </Col>
+    );
+  });
+
+  return (
+    <>
+      <div style={{ width: "85%", margin: "3rem auto" }}>
+        <Title level={2}>Recommneded</Title>
+        <hr />
+        {/* Row와 Col은 1개의 Row에 4개의 비디오(Col)를 넣고 싶다 */}
+        <Row gutter={[32, 16]}>{renderCards}</Row>
+        {/* //xs가장 작을때 비디오 하나 크기가 24가 된다 중간은 8 제일클때 6 // 반응형 6곱하기 4는 24 게시물4개 */}
+      </div>
+    </>
+  );
 }
 
-export default LandingPage
+export default LandingPage;
