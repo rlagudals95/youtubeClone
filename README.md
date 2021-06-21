@@ -9,3 +9,6 @@ React + node.js
 
 ## 동영상 디테일 페이지
 ![image](https://user-images.githubusercontent.com/76252074/122504275-eee82480-d034-11eb-84d2-2b9b006a1627.png)
+
+## 구독기능
+![Uploading image.png…]()
