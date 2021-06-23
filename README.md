@@ -1,6 +1,9 @@
 # HmkTube
 React + node.js
 
+# 깨닫게 된 점
+https://velog.io/@dbfudgudals/node.js%EC%9D%98-%EC%9E%A5%EC%A0%90-%EB%8B%A8%EC%A0%90
+
 ## 드래그로 서버에 동영상 파일 저장하기
 ![image](https://user-images.githubusercontent.com/76252074/122213717-33b07600-cee4-11eb-9a53-f8d43e006e70.png)
 
