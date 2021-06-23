@@ -1,4 +1,4 @@
-# youtubeClone
+# HmkTube
 React + node.js
 
 ## 드래그로 서버에 동영상 파일 저장하기
