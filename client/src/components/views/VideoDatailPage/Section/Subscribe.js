@@ -4,6 +4,8 @@ function Subscriber(props) {
   const userTo = props.userTo;
   const userFrom = props.userFrom;
 
+  // console.log(userTo);
+  // console.log(userFrom);
   const [SubscribeNumber, setSubscribeNumber] = useState(0);
   const [Subscribed, setSubscribed] = useState(false);
 
@@ -52,7 +54,8 @@ function Subscriber(props) {
           alert("구독수를 가져오는데 실패 했습니다😅");
         }
       });
-
+    console.log(userTo);
+    console.log(userFrom);
     axios
       .post("/api/subscribe/subscribed", subscribeNumberVariables)
       .then((response) => {

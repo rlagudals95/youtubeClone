@@ -3,10 +3,10 @@ const router = express.Router();
 const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 const multer = require("multer");
+const { Subscriber } = require("../models/Subscriber");
 
 //썸네일 가져오기 위해!
 let ffmpeg = require("fluent-ffmpeg");
-const { json } = require("body-parser");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -123,4 +123,42 @@ router.post("/thumbnail", (req, res) => {
     });
 });
 
+// 구독한 동영상 데이터
+
+router.post("/getSubscriptionVideos", (req, res) => {
+  // 자신의 아이디를 가지고 구독하는 정보들을 찾는다
+  // Subscriber 모델을 가져오고 받은 사용자 id로 찾는다
+  Subscriber.find({ userFrom: req.body.userFrom }).exec((err, Subscribers) => {
+    if (err) return res.status(400).send(err);
+
+    let subscribedUser = []; // 클라이언트가 구독한 사람들을 담는 배열
+
+    for (let i = 0; i < Subscribers.length; i++) {
+      subscribedUser.push(Subscribers[i].userTo);
+    }
+
+    // Subscribers.map((subscriber, i) => {
+    //   console.log(subscriber);
+    //   subscribedUser.push(subscriber.userTo);
+    // });
+
+    //이제 구독한 사람들의 비디오를 가져와야한다
+    //구독한 사람이 여러명일 수 있으므로 req.body.id 대신  { $in: subscribedUser }
+    //구독한 모든 사람들의 id를 가지고 writer들을 찾는다
+    Video.find({ writer: { $in: subscribedUser } })
+      .populate("writer") //writer의 모든 정보를 가져온다
+      .exec((err, videos) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).json({ success: true, videos });
+      });
+  });
+
+  // 찾은 사람들의 비디오를 가지고 온다
+});
+
 module.exports = router;
+
+// /`exec`는 데이터 대신 상태 정도의 작은 결과를 출력하는 프로그램을 실행하는 용도로 사용한다. 또 하나, `spawn`은 비동기로 실행하고, 결과도 비동기로 받는다. `exec`는 동기로 실행하고, 결과는 비동기로 받는다
+// Population 이란??
+//   Population는 문서의 경로를 다른 컬렉션의 실제 문서로 자동으로 바꾸는 방법입니다.
+// 예를들어 문서 사용자 ID를 해당 사용자의 데이터로 바꿉니다.Mongoose는 우리를 도울 수있는 Population을 가지고 있습니다.우리는 우리의 스키마에 ref를 정의하고 mongoose는 해당 ref를 사용하여 다른 컬렉션의 문서를 찾습니다.

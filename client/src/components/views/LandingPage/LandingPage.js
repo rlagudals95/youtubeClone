@@ -58,7 +58,7 @@ function LandingPage() {
   return (
     <>
       <div style={{ width: "85%", margin: "3rem auto" }}>
-        <Title level={2}>Recommneded</Title>
+        <Title level={2}>추천 VIDEOS</Title>
         <hr />
         {/* Row와 Col은 1개의 Row에 4개의 비디오(Col)를 넣고 싶다 */}
         <Row gutter={[32, 16]}>{renderCards}</Row>
