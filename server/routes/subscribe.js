@@ -52,4 +52,5 @@ router.post("/unSubscribe", (req, res) => {
   });
 });
 
+console.log("hh");
 module.exports = router;

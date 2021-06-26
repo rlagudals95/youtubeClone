@@ -17,4 +17,5 @@ const subscriberSchema = mongoose.Schema(
 
 const Subscriber = mongoose.model("Subscriber", subscriberSchema);
 
+console.log(Subscriber);
 module.exports = { Subscriber };

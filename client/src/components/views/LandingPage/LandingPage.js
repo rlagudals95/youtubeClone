@@ -26,7 +26,7 @@ function LandingPage() {
     let seconds = Math.floor(video.duration - minutes * 60); // 분을 지우고 60곱하면 초가 된다
 
     return (
-      <Col lg={6} md={8} xs={24}>
+      <Col lg={6} md={8} xs={24} key={index}>
         <a href={`/video/${video._id}`}>
           <div style={{ position: "relative" }}>
             <img

@@ -3,6 +3,7 @@ import axios from "axios";
 function Subscriber(props) {
   const userTo = props.userTo;
   const userFrom = props.userFrom;
+  const token = localStorage.getItem("userId");
 
   // console.log(userTo);
   // console.log(userFrom);
@@ -69,21 +70,23 @@ function Subscriber(props) {
 
   return (
     <div>
-      <button
-        onClick={onSubscribe}
-        style={{
-          backgroundColor: `${Subscribed ? "#AAAAAA" : "#CC0000"}`,
-          borderRadius: "4px",
-          color: "white",
-          padding: "10px 16px",
-          fontWeight: "500",
-          fontSize: "1rem",
-          textTransform: "uppercase",
-          border: "none",
-        }}
-      >
-        {SubscribeNumber} {Subscribed ? "Subscribed" : "Subscribe"}
-      </button>
+      {token ? ( // 로그인한 유저만 구독 버튼이 보인다
+        <button
+          onClick={onSubscribe}
+          style={{
+            backgroundColor: `${Subscribed ? "#AAAAAA" : "#CC0000"}`,
+            borderRadius: "4px",
+            color: "white",
+            padding: "10px 16px",
+            fontWeight: "500",
+            fontSize: "1rem",
+            textTransform: "uppercase",
+            border: "none",
+          }}
+        >
+          {SubscribeNumber} {Subscribed ? "Subscribed" : "Subscribe"}
+        </button>
+      ) : null}
     </div>
   );
 }
