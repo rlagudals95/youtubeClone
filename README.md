@@ -33,4 +33,6 @@ https://velog.io/@dbfudgudals/node.js%EC%9D%98-%EC%9E%A5%EC%A0%90-%EB%8B%A8%EC%A
 ## 구독기능
 ![image](https://user-images.githubusercontent.com/76252074/122698469-53e48a00-d282-11eb-8057-dbc3d6547437.png)
 
+## 댓글작성기능
+![image](https://user-images.githubusercontent.com/76252074/123537157-ff04b000-d768-11eb-9a71-d06eb638c97c.png)
 
